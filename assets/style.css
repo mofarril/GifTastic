@@ -44,4 +44,18 @@ h1 {
         font-size: 30px;
         color: purple;
     }
+    
+    #images{
+              
     }
+
+    .animalsG{
+
+        display: inline-flex;
+        margin:auto; 
+        padding: 2px; 
+     }
+
+     p{
+        display: inline-flex;
+     }
