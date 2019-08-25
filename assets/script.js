@@ -39,9 +39,9 @@ createNewButton(); //call button func
 
 //////////ADDING GIPHY TO BUTTONS/////////////////////////////////////////////////////
 
-$("button").on("click", function() { // listen for button click
+$("button").on("click", function () { // listen for button click
 
-    let animal  = $(this).attr("data-name");
+  let animal = $(this).attr("data-name");
 
   // Storing our giphy API URL for a random animal image //
 
@@ -54,39 +54,43 @@ $("button").on("click", function() { // listen for button click
     method: "GET"
   })
 
-  // After the data from the AJAX request comes back //
+    // After the data from the AJAX request comes back //
 
-    .then(function(response) {
+    .then(function (response) {
 
       console.log(queryURL);//works
       console.log(response);//works
 
-  // Storing an array of results in the results variable //
+      // Storing an array of results in the results variable //
 
-      let results = response.data; 
+      let results = response.data;
 
-  //loops over result items //
+      //loops over result items //
 
       for (let i = 0; i < results.length; i++) {
 
-        let gifDiv= $("<div>"); //div for gif
-        let rating = results[i].rating; //creating rating ariable
+        let gifDiv = $("<div>"); //div for gif
+        let rating = results[i].rating; //creating rating variable
         let p = $('<p>').text("Rating: " + results[i].rating); //creates paragraph tag with rating
         let animalImage = $("<img>"); // Creating and storing an image tag
-        let animated = results[i]
+
+        //creating fixed and still variables to pause/unpause gifs
+
+        let animated = results[i].images.fixed_height_small.url;
+        let still = results[i].images.fixed_height_small.url;
 
 
         //adding src attribute to property pulled from result item       
-        animalImage.attr("src", results[i].images.fixed_height_small.url); 
-
-      // appending <p> and animalImage to gifDIV
+        animalImage.attr("src", still);
+        animalImage.attr("src", still);
+        // appending <p> and animalImage to gifDIV
 
         gifDiv.append(p);
         gifDiv.append(animalImage);
         gifDiv.addClass("animal class=btn alert-info btn-sm"); // add class from buttons generated to new buttons
-       // Prepending the animalImage to the images div
-      $("#images").append(gifDiv);
-    }
-  });
-  
+        // Prepending the animalImage to the images div
+        $("#images").prepend(gifDiv);
+      }
+    });
+
 })
