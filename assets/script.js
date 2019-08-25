@@ -1,47 +1,80 @@
 console.log("linked")
-const topics = ["dogs", "zebras", "cats", "birds", "fluffy Cows"];
+let topics = ["dogs", "zebras", "cats", "birds", "fluffy Cows"]; //topic that interests me
 
- // calling function to run
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function createNewButton() {
+//BUTTONS GENNERATOR:
 
-  // Delete the content inside the buttons-view div prior to adding new movies
-  // (this is necessary otherwise you will have repeat buttons)
-  $("#animal-button").empty();
-  // Loop through the array of movies, then generate buttons for each movie in the array
-  for (var i = 0; i < topics.length; i++) {
-    var newButton = $("<button>").text(topics[i]);
-    $("#animal-button").append(newButton);
+function createNewButton() { //creating new buttons
+
+  $("#button-container").empty();
+
+  // Loop through the topics array, then generate buttons for each topic in the array
+
+  for (let i = 0; i < topics.length; i++) {
+
+    let newButton = $("<button>"); //new button with bootstrap
+    newButton.addClass("animal class=btn alert-info btn-sm"); //adding animal class
+    newButton.attr("data-name", topics[i]); //adding data-attribute with value of a topic at index i
+    newButton.text(topics[i]); // providing text to buttons
+    $("#button-container").append(newButton);
   }
 }
-createNewButton();
+//Taking user input on click (the buttons created above) //call it a handler
 
-    //taking user input on click cat button //call it a handler
-    $("#animal-button").on("click", function() { //name it to make it read easier later function handleClick ()
+$("#add-animal").on("click", function (event) {
+  event.preventDefault();
 
-      //where to pull data information
-      var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9&tag=cats";//read api documentation to get format
+  var newAnimal = $("#animal-input").val().trim(); //grabing text from input
+  topics.push(newAnimal); //adding text to array
+  createNewButton(); // creating new buttons
 
-      // pulling data from website // promise
-      $.ajax({ //chainging version; could also be written out var myPromise = ajax({.......})
-        url: queryURL,
-        method: "GET"
-      })
+});
 
-        //function to load response from API //return of the promise
-        .then(function(response) {
+createNewButton(); //call button func
 
-          //dom bit to store image for later use, specifically image_original_url
-          var imageUrl = response.data.image_original_url;
+//////////////////////////////////////////////////////////////////////////////////////
 
-          //creating image tag named catImage
-          var anImage = $("<img>");
+//GIPHY/////
 
-          //displaying image by nailing down attributes of the data image
-          anImage.attr("src", imageUrl);
-          anImage.attr("alt", "animal image");
+//////////ADDING GIPHY TO BUTTONS//////
+$("button").on("click", function() { //listen for button click
 
-          //adding new image above the previous
-          $("#images").prepend(anImage);
-        });
-    });
+    let animal  = $(this).attr("data-name");
+  // Storing our giphy API URL for a random animal image
+  var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=KOJ4PV8ukMoaYa69HGFabyl1VGEr13uj&q=" + animal + "&limit=10&offset=0&rating=PG-13&lang=en";
+
+  // Perfoming an AJAX GET request to our queryURL
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  })
+
+    // After the data from the AJAX request comes back
+    .then(function(response) {
+
+      console.log(queryURL);//works
+      console.log(response);//works
+
+
+      var results = response.data;  // Storing an array of results in the results variable
+
+      for (var i = 0; i < results.length; i++) { //loops over result items
+
+        var gifDiv= $("<div"); //div for gif
+        var p = $('<p>').text("Rating: " + results[i].rating); //creates paragraph tag with rating
+        var animalImage = $("<img>"); // Creating and storing an image tag
+
+        //adding src attribute to property pulled from result item       
+        animalImage.attr("src", results[i].response.data.images.fixed_height_small.url); 
+
+      // appending <p> and animalImage to gifDIV
+
+        gifDiv.append(p);
+        gifDiv.append(animalImage);
+      
+       // Prepending the catImage to the images div
+      $("#images").prepend(gifDiv);
+    }
+  });
+})

@@ -3,20 +3,41 @@
 
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
   <title>GifTastical</title>
 </head>
 
 <body>
-    <div class="button-container">
-          <button type="button" class="btn btn-secondary btn-sm" id="animal-button">AMINALBOOOTON</button>
-</div>
-  <div id="images">
-  </div>
+  <div class="contents">
+    <div id="heading">
+      <h1>GIFTASTICAL ANIMALS</h1>
+    </div>
+    <!--ANIMOOL BUTTON DUMPSITE-->
+    <div id="button-container"></div>
 
+
+    <form id="animal-form">
+      <label for="animal-input"><h3>ENTER NEW ANIMOOOOOL</h3></label>
+      <input type="text" id="animal-input">
+      <br>
+
+      <!-- Submit Button to add new GIPHY-ANIMOOL BUTTONS -->
+      <input id="add-animal" class="btn btn-secondary btn-md rounded" type="submit" value="MOOOOO">
+    </form>
+
+    <div id="images">
+    </div>
+    <!--img close-->
+
+  </div>
+  <!--contents close-->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript" src="assets/script.js"></script>
-  
+
 </body>
 
 </html>
